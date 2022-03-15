@@ -22,11 +22,16 @@ body {
   border: 2px solid white;
   left: 20px;
   top: 20px;
-  width: 165px;
+  width: 245px;
   background: rgba(255, 255, 255, 0.15);
 }
 button {
-  padding: 5px 5px;
-  width: 150px;
-  font-size: 20px;
+  padding: 1px 1px;
+  width: 230px;
+  font-size:15px;
+}
+label, input{
+  color: white;
+  font-size: 15px;
+
 }

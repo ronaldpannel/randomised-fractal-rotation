@@ -21,10 +21,33 @@ window.addEventListener("load", function () {
   let scale = 0.5;
   let spread = 0.5;
   let color = "hsl(" + Math.random() * 360 + ", 100%, 50%)";
-  let lineWidth = Math.random() * 20 +10
+  let lineWidth = Math.random() * 20 + 10;
 
   //controls
   const randomizeBtn = document.getElementById("randomizeBtn");
+  const resetBtn = this.document.getElementById("resetBtn");
+  const spreadSlider = document.getElementById("spread");
+  const spreadLabel = this.document.getElementById("spreadLabel");
+  const sidesSlider = document.getElementById("sides");
+  const sidesLabel = document.getElementById("sidesLabel");
+  const linerSlider = document.getElementById("lineSlider");
+  const lineLabel = document.getElementById("lineLabel");
+
+  spreadSlider.addEventListener("change", function (e) {
+    spread = e.target.value;
+    updateSliders();
+    drawFractal();
+  });
+  sidesSlider.addEventListener("change", function (e) {
+    sides = e.target.value;
+    updateSliders();
+    drawFractal();
+  });
+  linerSlider.addEventListener('change', function(e){
+    lineWidth = e.target.value
+    updateSliders();
+    drawFractal();
+  });
 
   function drawBranch(level) {
     if (level > maxLevel) {
@@ -47,7 +70,7 @@ window.addEventListener("load", function () {
       ctx.rotate(-spread);
       drawBranch(level + 1);
       ctx.restore();
-      ctx.restore()
+      ctx.restore();
     }
   }
 
@@ -62,6 +85,7 @@ window.addEventListener("load", function () {
       drawBranch(0);
     }
     ctx.restore();
+    randomizeBtn.style.backgroundColor = color;
   }
   drawFractal();
 
@@ -73,11 +97,34 @@ window.addEventListener("load", function () {
     lineWidth = Math.random() * 20 + 10;
     drawFractal();
   }
-  randomizeBtn.addEventListener("click", function(){
-    randomizeFractal()
-    drawFractal()
+  randomizeBtn.addEventListener("click", function () {
+    randomizeFractal();
+    updateSliders();
+    drawFractal();
   });
-  window.addEventListener('resize', function(){
+  
+  function resetFractal() {
+    sides = 5;
+    scale = 0.5;
+    spread = 0.7;
+    color = "hsl(200, 100%, 50%)";
+    lineWidth = 10;
+  };
+  resetBtn.addEventListener("click", function () {
+    resetFractal();
+    updateSliders();
+    drawFractal();
+  });
+  function updateSliders() {
+    spreadSlider.value = spread;
+    spreadLabel.innerText = " spread: " + Number(spread).toFixed(1);
+    sidesSlider.value = sides;
+    sidesLabel.innerText = " side: " + sides;
+    lineLabel.innerText = 'lineWidth: ' + Number(lineWidth).toFixed(1)
+  }
+  updateSliders();
+
+  window.addEventListener("resize", function () {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     drawFractal();
